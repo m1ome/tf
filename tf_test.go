@@ -37,6 +37,14 @@ func (i Item) Add(c float64) float64 {
 	return i.a + i.b + c
 }
 
+func TestCasting(t *testing.T) {
+	Run := tf.Function(t, func(a, b int8) int64 {
+		return int64(a + b)
+	})
+
+	Run(1, 2).Returns(3)
+}
+
 func TestItem_Average(t *testing.T) {
 	Sum := tf.Function(t, Item.Sum)
 
