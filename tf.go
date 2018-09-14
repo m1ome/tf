@@ -89,7 +89,11 @@ func (f *F) Returns(expected ...interface{}) {
 		}
 
 		for idx, e := range expected {
-			expected[idx] = reflect.ValueOf(e).Convert(f.fnArgsOut[idx]).Interface()
+			if e == nil {
+				expected[idx] = reflect.Zero(f.fnArgsOut[idx]).Interface()
+			} else {
+				expected[idx] = reflect.ValueOf(e).Convert(f.fnArgsOut[idx]).Interface()
+			}
 		}
 
 		assert.Equal(t, expected, returns)
